@@ -1,0 +1,30 @@
+application:
+  name: postgres-notes
+  pods:
+    - name: app
+      image: "registry.nexlayer.io/user_01krc1n44dd49btzyv6vht92v2/postgres-notes:1a06df1e5ad"
+      path: /
+      servicePorts:
+        - 8080
+      vars:
+        PGDATA: "/var/lib/postgresql/data/pgdata"
+        NODE_ENV: production
+        PORT: "8080"
+        DATABASE_URL: "postgresql://app:${POSTGRES_PASSWORD}@postgres.pod:5432/app"
+      volumes:
+        - name: postgres-notes-pg-data
+          size: 1Gi
+          mountPath: /var/lib/postgresql/data
+    - name: postgres
+      image: mirror.gcr.io/library/postgres:16-alpine
+      servicePorts:
+        - 5432
+      vars:
+        POSTGRES_USER: "app"
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: "app"
+        PGDATA: /var/lib/postgresql/data/pgdata
+      volumes:
+        - name: postgres-notes-postgres-data
+          size: 10Gi
+          mountPath: /var/lib/postgresql/data
