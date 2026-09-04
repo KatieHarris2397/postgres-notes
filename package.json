@@ -1,0 +1,14 @@
+{
+  "name": "postgres-notes",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A tiny notes app backed by a standalone Postgres database.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  }
+}
